@@ -22,8 +22,7 @@ export async function ingresar() {
   const clave = campo({ nombre: "clave", etiqueta: "Contraseña", tipo: "password", autocompletar: "current-password" });
   const nodo = h("div", { class: "acceso" }, lado(), h("section", { class: "tarjeta" }, h("h1", null, "Iniciar sesión"),
     h("p", { class: "subtitulo" }, "Entra para registrar tus equipos y consultar tus diagnósticos."),
-    formulario({ campos: [correo, clave], boton: "Iniciar sesión", enviar: (d) => entrar("/api/login", d) }),
-    h("div", { class: "campo" }, alternarClave(clave)),
+    formulario({ campos: [correo, clave], cuerpo: [correo.raiz, clave.raiz, alternarClave(clave)], boton: "Iniciar sesión", enviar: (d) => entrar("/api/login", d) }),
     h("p", null, "¿Aún no tienes cuenta? ", h("a", { href: "#/registro" }, "Crea una cuenta"))));
   return { titulo: "Iniciar sesión", nodo };
 }
@@ -34,8 +33,7 @@ export async function registro() {
   const clave = campo({ nombre: "clave", etiqueta: "Contraseña", tipo: "password", autocompletar: "new-password", ayuda: "Entre 10 y 128 caracteres. Puedes usar una frase y pegarla desde tu administrador de contraseñas." });
   const nodo = h("div", { class: "acceso" }, lado(), h("section", { class: "tarjeta" }, h("h1", null, "Crear cuenta"),
     h("p", { class: "subtitulo" }, "Los campos con asterisco (*) son obligatorios."),
-    formulario({ campos: [nombre, correo, clave], boton: "Crear cuenta", enviar: (d) => entrar("/api/registro", d) }),
-    alternarClave(clave),
+    formulario({ campos: [nombre, correo, clave], cuerpo: [nombre.raiz, correo.raiz, clave.raiz, alternarClave(clave)], boton: "Crear cuenta", enviar: (d) => entrar("/api/registro", d) }),
     h("p", null, "¿Ya tienes cuenta? ", h("a", { href: "#/ingresar" }, "Inicia sesión"))));
   return { titulo: "Crear cuenta", nodo };
 }
